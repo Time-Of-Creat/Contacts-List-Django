@@ -1,0 +1,254 @@
+{% extends 'contacts/base.html' %}
+{% load static %}
+
+{% block title %}Управление контактами{% endblock %}
+
+{% block content %}
+<!-- Hero секция -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">📇 CRM</div>
+                <h1>Управляйте своими<br><span class="highlight">контактами</span> легко</h1>
+                <p>Простое и удобное приложение для хранения и управления вашими контактами. Создавайте, редактируйте, удаляйте — всё в одном месте.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary btn-lg">
+                        <span>➕</span> Добавить контакт
+                    </a>
+                    <a href="#" class="btn btn-outline btn-lg">
+                        <span>📋</span> Все контакты
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">{{ total_contacts|default:"0" }}</span>
+                        <span class="stat-label">Всего контактов</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">{{ recent_contacts|default:"0" }}</span>
+                        <span class="stat-label">Добавлено за месяц</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-illustration">
+                    <div class="illustration-main">
+                        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Фон -->
+                            <rect x="60" y="60" width="280" height="280" rx="20" fill="#EEF2FF"/>
+                            <!-- Контакты -->
+                            <circle cx="130" cy="140" r="30" fill="#4F46E5" opacity="0.8"/>
+                            <circle cx="270" cy="140" r="30" fill="#818CF8" opacity="0.8"/>
+                            <circle cx="200" cy="260" r="35" fill="#6366F1" opacity="0.8"/>
+                            <!-- Иконки -->
+                            <text x="130" y="150" text-anchor="middle" font-size="24">👤</text>
+                            <text x="270" y="150" text-anchor="middle" font-size="24">👤</text>
+                            <text x="200" y="270" text-anchor="middle" font-size="28">👤</text>
+                            <!-- Плюс -->
+                            <circle cx="200" cy="140" r="20" fill="#10B981"/>
+                            <text x="200" y="150" text-anchor="middle" font-size="24" fill="white">+</text>
+                            <!-- Соединительные линии -->
+                            <line x1="150" y1="140" x2="185" y2="140" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4"/>
+                            <line x1="215" y1="140" x2="245" y2="140" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4"/>
+                            <line x1="170" y1="240" x2="130" y2="170" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4"/>
+                            <line x1="230" y1="240" x2="270" y2="170" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Возможности CRUD -->
+<section class="features">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Основные возможности</span>
+            <h2>Всё для работы с контактами</h2>
+            <p>Полный набор операций для управления вашей контактной книгой</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon" style="background: #EEF2FF; color: #4F46E5;">➕</div>
+                <h3>Создание контакта</h3>
+                <p>Добавляйте новые контакты с именем, телефоном, email и другой важной информацией</p>
+                <a href="#" class="feature-link">Добавить →</a>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: #ECFDF5; color: #059669;">📋</div>
+                <h3>Просмотр списка</h3>
+                <p>Все ваши контакты в одном месте — удобный список с поиском и фильтрацией</p>
+                <a href="#" class="feature-link">Посмотреть →</a>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: #FEF3C7; color: #D97706;">✏️</div>
+                <h3>Редактирование</h3>
+                <p>Легко обновляйте информацию о контактах: меняйте данные в несколько кликов</p>
+                <a href="#" class="feature-link">Изменить →</a>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: #FEE2E2; color: #DC2626;">🗑️</div>
+                <h3>Удаление</h3>
+                <p>Удаляйте ненужные контакты с подтверждением, чтобы случайно ничего не потерять</p>
+                <a href="#" class="feature-link">Удалить →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Как это работает -->
+<section class="how-it-works">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Как это работает</span>
+            <h2>Всё просто: три шага</h2>
+            <p>Начните управлять контактами прямо сейчас</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-icon">📝</div>
+                <h3>Создайте контакт</h3>
+                <p>Нажмите кнопку "Добавить контакт" и заполните форму с данными</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-icon">👀</div>
+                <h3>Просматривайте</h3>
+                <p>Все контакты отображаются в виде таблицы или карточек для удобства</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-icon">🔄</div>
+                <h3>Управляйте</h3>
+                <p>Редактируйте или удаляйте контакты когда это необходимо</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Пример контактов -->
+<section class="contacts-preview">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Пример</span>
+            <h2>Ваши контакты будут выглядеть так</h2>
+            <p>Удобная таблица со всей необходимой информацией</p>
+        </div>
+        <div class="preview-table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>Телефон</th>
+                        <th>Email</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><span class="contact-name">Иван Петров</span></td>
+                        <td>+7 (999) 123-45-67</td>
+                        <td>ivan@example.com</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="#" class="btn btn-sm btn-edit">✏️</a>
+                                <a href="#" class="btn btn-sm btn-delete">🗑️</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><span class="contact-name">Елена Смирнова</span></td>
+                        <td>+7 (888) 234-56-78</td>
+                        <td>elena@example.com</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="#" class="btn btn-sm btn-edit">✏️</a>
+                                <a href="#" class="btn btn-sm btn-delete">🗑️</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><span class="contact-name">Алексей Иванов</span></td>
+                        <td>+7 (777) 345-67-89</td>
+                        <td>alex@example.com</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="#" class="btn btn-sm btn-edit">✏️</a>
+                                <a href="#" class="btn btn-sm btn-delete">🗑️</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="preview-footer">
+                <a href="#" class="btn btn-primary">Перейти к полному списку →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Преимущества -->
+<section class="benefits">
+    <div class="container">
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <span class="benefit-icon">⚡</span>
+                <div>
+                    <h4>Быстрота</h4>
+                    <p>Мгновенное добавление и редактирование контактов</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">🔒</span>
+                <div>
+                    <h4>Безопасность</h4>
+                    <p>Ваши контакты надежно защищены и доступны только вам</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">📱</span>
+                <div>
+                    <h4>Доступность</h4>
+                    <p>Работайте с контактами с любого устройства</p>
+                </div>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">🔄</span>
+                <div>
+                    <h4>Удобство</h4>
+                    <p>Интуитивно понятный интерфейс для всех пользователей</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Секция -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <div class="cta-text">
+                <h2>Готовы начать?</h2>
+                <p>Добавьте свой первый контакт прямо сейчас</p>
+            </div>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-white btn-lg">
+                    <span>➕</span> Создать контакт
+                </a>
+                <a href="#" class="btn btn-outline-white btn-lg">
+                    <span>📋</span> Просмотреть все
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

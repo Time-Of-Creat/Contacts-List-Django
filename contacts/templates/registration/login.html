@@ -1,0 +1,110 @@
+{% extends 'contacts/base.html' %}
+{% load static %}
+
+{% block title %}Вход в систему{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-icon">🔐</div>
+                <h1>Добро пожаловать!</h1>
+                <p>Войдите в свой аккаунт, чтобы управлять контактами</p>
+            </div>
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                <div class="alert alert-error">
+                    {% for error in form.non_field_errors %}
+                        <strong>❌ Ошибка:</strong> {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">
+                        <span class="label-icon">👤</span>
+                        Имя пользователя
+                    </label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="field-error">
+                            {% for error in form.username.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">
+                        <span class="label-icon">🔒</span>
+                        Пароль
+                    </label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="field-error">
+                            {% for error in form.password.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="remember">
+                        <span class="checkmark"></span>
+                        Запомнить меня
+                    </label>
+                    <a href="{% url 'password_reset' %}" class="forgot-link">Забыли пароль?</a>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span>🔑</span> Войти
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-features">
+            <div class="feature-item">
+                <span class="feature-icon">📇</span>
+                <div>
+                    <h4>Управление контактами</h4>
+                    <p>Создавайте, редактируйте и удаляйте контакты</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🔒</span>
+                <div>
+                    <h4>Безопасный доступ</h4>
+                    <p>Ваши данные надежно защищены</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">📱</span>
+                <div>
+                    <h4>Мобильный доступ</h4>
+                    <p>Входите с любого устройства</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">⚡</span>
+                <div>
+                    <h4>Быстрая работа</h4>
+                    <p>Мгновенный доступ ко всем функциям</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
