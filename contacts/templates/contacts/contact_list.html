@@ -1,0 +1,117 @@
+{% extends 'contacts/base.html' %}
+{% load static %}
+
+{% block title %}Мои контакты{% endblock %}
+
+{% block content %}
+<div class="contacts-page">
+    <div class="container">
+        <!-- Заголовок страницы -->
+        <div class="page-header">
+            <div class="header-content">
+                <div>
+                    <h1>📇 Мои контакты</h1>
+                    <p class="subtitle">Всего контактов: <strong>{{ contacts|length }}</strong></p>
+                </div>
+                <div class="header-actions">
+                    <a href="#" class="btn btn-primary">
+                        <span>➕</span> Добавить контакт
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Поиск и фильтры -->
+        <div class="search-section">
+            <form method="get" class="search-form">
+                <div class="search-input-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" name="search" placeholder="Поиск по имени, фамилии, телефону или email..." value="{{ request.GET.search }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Найти</button>
+                {% if request.GET.search %}
+                    <a href="{% url 'contact_list' %}" class="btn btn-outline">Сбросить</a>
+                {% endif %}
+            </form>
+        </div>
+
+        <!-- Список контактов -->
+        {% if contacts %}
+            <div class="contacts-grid">
+                {% for contact in contacts %}
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            {% if contact.avatar %}
+                                <img src="{{ contact.avatar.url }}" alt="{{ contact.first_name }}" class="avatar-image">
+                            {% else %}
+                                <div class="avatar-placeholder">
+                                    {{ contact.first_name|first }}{{ contact.last_name|first }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="contact-info">
+                            <h3 class="contact-name">{{ contact.first_name }} {{ contact.last_name }}</h3>
+                            <div class="contact-details">
+                                <div class="detail-item">
+                                    <span class="detail-icon">📞</span>
+                                    <span class="detail-text">{{ contact.phone_number }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-icon">✉️</span>
+                                    <span class="detail-text">{{ contact.email }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-icon">📅</span>
+                                    <span class="detail-text">Добавлен: {{ contact.creation_date|date:"d.m.Y" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-actions">
+                            <a href="{% url 'contact_detail' contact.id %}" class="btn btn-sm btn-info" title="Просмотр">
+                                👁️
+                            </a>
+                            <a href="{% url 'contact_edit' contact.id %}" class="btn btn-sm btn-edit" title="Редактировать">
+                                ✏️
+                            </a>
+                            <a href="{% url 'contact_delete' contact.id %}" class="btn btn-sm btn-delete" title="Удалить">
+                                🗑️
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Пагинация (опционально) -->
+            {% if is_paginated %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1" class="btn btn-sm btn-outline">&laquo; Первая</a>
+                        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-sm btn-outline">Назад</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-sm btn-outline">Вперед</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-sm btn-outline">Последняя &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            {% endif %}
+        {% else %}
+            <!-- Пустое состояние -->
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h2>У вас пока нет контактов</h2>
+                <p>Начните добавлять свои контакты прямо сейчас</p>
+                <a href="#" class="btn btn-primary btn-lg">
+                    <span>➕</span> Добавить первый контакт
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
