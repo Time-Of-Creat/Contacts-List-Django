@@ -7,8 +7,8 @@ user = get_user_model()
 
 
 class Contact(models.Model):
-    firstname = models.CharField(max_length=50)
-    secondname = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
 
     phone_number = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
@@ -23,4 +23,4 @@ class Contact(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.firstname} {self.secondname} - {self.phone_number}"
+        return f"{self.first_name} {self.last_name} - {self.phone_number}"
