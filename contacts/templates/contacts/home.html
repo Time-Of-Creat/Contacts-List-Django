@@ -13,7 +13,7 @@
                 <h1>Управляйте своими<br><span class="highlight">контактами</span> легко</h1>
                 <p>Простое и удобное приложение для хранения и управления вашими контактами. Создавайте, редактируйте, удаляйте — всё в одном месте.</p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary btn-lg">
+                    <a href="{% url 'contact_create' %}" class="btn btn-primary btn-lg">
                         <span>➕</span> Добавить контакт
                     </a>
                     <a href="{% url 'contact_list' %}" class="btn btn-outline btn-lg">
@@ -74,13 +74,13 @@
                 <div class="feature-icon" style="background: #EEF2FF; color: #4F46E5;">➕</div>
                 <h3>Создание контакта</h3>
                 <p>Добавляйте новые контакты с именем, телефоном, email и другой важной информацией</p>
-                <a href="#" class="feature-link">Добавить →</a>
+                <a href="{% url 'contact_create' %}" class="feature-link">Добавить →</a>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background: #ECFDF5; color: #059669;">📋</div>
                 <h3>Просмотр списка</h3>
                 <p>Все ваши контакты в одном месте — удобный список с поиском и фильтрацией</p>
-                <a href="#" class="feature-link">Посмотреть →</a>
+                <a href="{% url 'contact_list' %}" class="feature-link">Посмотреть →</a>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background: #FEF3C7; color: #D97706;">✏️</div>
@@ -190,7 +190,7 @@
                 </tbody>
             </table>
             <div class="preview-footer">
-                <a href="#" class="btn btn-primary">Перейти к полному списку →</a>
+                <a href="{% url 'contact_list' %}" class="btn btn-primary">Перейти к полному списку →</a>
             </div>
         </div>
     </div>
@@ -241,10 +241,10 @@
                 <p>Добавьте свой первый контакт прямо сейчас</p>
             </div>
             <div class="cta-buttons">
-                <a href="#" class="btn btn-white btn-lg">
+                <a href="{% url 'contact_create' %}" class="btn btn-white btn-lg">
                     <span>➕</span> Создать контакт
                 </a>
-                <a href="#" class="btn btn-outline-white btn-lg">
+                <a href="{% url 'contact_list' %}" class="btn btn-outline-white btn-lg">
                     <span>📋</span> Просмотреть все
                 </a>
             </div>

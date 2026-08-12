@@ -14,7 +14,7 @@
                     <p class="subtitle">Всего контактов: <strong>{{ contacts|length }}</strong></p>
                 </div>
                 <div class="header-actions">
-                    <a href="#" class="btn btn-primary">
+                    <a href="{% url 'contact_create' %}" class="btn btn-primary">
                         <span>➕</span> Добавить контакт
                     </a>
                 </div>
@@ -35,53 +35,49 @@
             </form>
         </div>
 
-        <!-- Список контактов -->
+        <!-- Список контактов в виде таблицы (как на домашней странице) -->
         {% if contacts %}
-            <div class="contacts-grid">
-                {% for contact in contacts %}
-                    <div class="contact-card">
-                        <div class="contact-avatar">
-                            {% if contact.avatar %}
-                                <img src="{{ contact.avatar.url }}" alt="{{ contact.first_name }}" class="avatar-image">
-                            {% else %}
-                                <div class="avatar-placeholder">
-                                    {{ contact.first_name|first }}{{ contact.last_name|first }}
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="contact-info">
-                            <h3 class="contact-name">{{ contact.first_name }} {{ contact.last_name }}</h3>
-                            <div class="contact-details">
-                                <div class="detail-item">
-                                    <span class="detail-icon">📞</span>
-                                    <span class="detail-text">{{ contact.phone_number }}</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-icon">✉️</span>
-                                    <span class="detail-text">{{ contact.email }}</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-icon">📅</span>
-                                    <span class="detail-text">Добавлен: {{ contact.creation_date|date:"d.m.Y" }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-actions">
-                            <a href="{% url 'contact_detail' contact.id %}" class="btn btn-sm btn-info" title="Просмотр">
-                                👁️
-                            </a>
-                            <a href="{% url 'contact_edit' contact.id %}" class="btn btn-sm btn-edit" title="Редактировать">
-                                ✏️
-                            </a>
-                            <a href="{% url 'contact_delete' contact.id %}" class="btn btn-sm btn-delete" title="Удалить">
-                                🗑️
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
+            <div class="contacts-table-wrapper">
+                <table class="table contacts-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Имя</th>
+                            <th>Телефон</th>
+                            <th>Email</th>
+                            <th>Дата добавления</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contact in contacts %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    <div class="contact-name-cell">
+                                        {% if contact.avatar %}
+                                            <img src="{{ contact.avatar.url }}" alt=" " class="avatar-thumbnail">
+                                        {% endif %}
+                                        <span class="contact-name">{{ contact.first_name }} {{ contact.last_name }}</span>
+                                    </div>
+                                </td>
+                                <td>{{ contact.phone_number }}</td>
+                                <td>{{ contact.email }}</td>
+                                <td>{{ contact.creation_date|date:"d.m.Y" }}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="#" class="btn btn-sm btn-info" title="Просмотр">👁️</a>
+                                        <a href="#" class="btn btn-sm btn-edit" title="Редактировать">✏️</a>
+                                        <a href="#" class="btn btn-sm btn-delete" title="Удалить">🗑️</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Пагинация (опционально) -->
+            <!-- Пагинация -->
             {% if is_paginated %}
             <div class="pagination">
                 <span class="step-links">
@@ -107,7 +103,7 @@
                 <div class="empty-icon">📭</div>
                 <h2>У вас пока нет контактов</h2>
                 <p>Начните добавлять свои контакты прямо сейчас</p>
-                <a href="#" class="btn btn-primary btn-lg">
+                <a href="{% url 'contact_create' %}" class="btn btn-primary btn-lg">
                     <span>➕</span> Добавить первый контакт
                 </a>
             </div>

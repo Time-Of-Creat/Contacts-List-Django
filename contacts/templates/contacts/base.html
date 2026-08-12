@@ -22,7 +22,7 @@
             </button>
             <ul class="navbar-menu" id="navbarMenu">
                 <li><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Главная</a></li>
-                <li><a href="#" class="{% if 'contact' in request.path %}active{% endif %}">Контакты</a></li>
+                <li><a href="{% url 'contact_list' %}" class="{% if 'contact' in request.path %}active{% endif %}">Контакты</a></li>
                 {% if user.is_authenticated %}
                 <li class="nav-user">
                     <span class="user-greeting">👤 {{ user.username }}</span>

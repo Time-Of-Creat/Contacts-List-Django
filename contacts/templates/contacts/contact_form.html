@@ -1,0 +1,176 @@
+{% extends 'contacts/base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="contact-form-page">
+    <div class="container">
+        <div class="form-container">
+            <div class="form-header">
+                <div class="form-icon">➕</div>
+                <h1>{{ title }}</h1>
+                <p>Заполните все поля для добавления нового контакта</p>
+            </div>
+
+            <!-- Сообщения -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Форма -->
+            <form method="post" enctype="multipart/form-data" class="contact-form">
+                {% csrf_token %}
+
+                <!-- Не полевые ошибки -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-error">
+                        {% for error in form.non_field_errors %}
+                            <strong>❌ Ошибка:</strong> {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="form-grid">
+                    <!-- Имя -->
+                    <div class="form-group">
+                        <label for="{{ form.first_name.id_for_label }}">
+                            <span class="label-icon">👤</span>
+                            {{ form.first_name.label }}
+                            <span class="required">*</span>
+                        </label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <div class="field-error">
+                                {% for error in form.first_name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Фамилия -->
+                    <div class="form-group">
+                        <label for="{{ form.last_name.id_for_label }}">
+                            <span class="label-icon">👤</span>
+                            {{ form.last_name.label }}
+                            <span class="required">*</span>
+                        </label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <div class="field-error">
+                                {% for error in form.last_name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Телефон -->
+                    <div class="form-group">
+                        <label for="{{ form.phone_number.id_for_label }}">
+                            <span class="label-icon">📞</span>
+                            {{ form.phone_number.label }}
+                            <span class="required">*</span>
+                        </label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <div class="field-error">
+                                {% for error in form.phone_number.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="field-help">Пример: +7 (999) 123-45-67</div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}">
+                            <span class="label-icon">✉️</span>
+                            {{ form.email.label }}
+                            <span class="required">*</span>
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="field-error">
+                                {% for error in form.email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="field-help">Введите корректный email адрес</div>
+                    </div>
+
+                    <!-- Аватар -->
+                    <div class="form-group full-width">
+                        <label for="{{ form.avatar.id_for_label }}">
+                            <span class="label-icon">🖼️</span>
+                            {{ form.avatar.label }}
+                        </label>
+                        <div class="avatar-upload">
+                            <div class="avatar-preview" id="avatarPreview">
+                                <span class="preview-placeholder">📷</span>
+                                <img id="previewImage" src="#" alt="Preview" style="display: none;">
+                            </div>
+                            <div class="upload-controls">
+                                {{ form.avatar }}
+                                {% if form.avatar.help_text %}
+                                    <div class="field-help">{{ form.avatar.help_text }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if form.avatar.errors %}
+                            <div class="field-error">
+                                {% for error in form.avatar.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Действия -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span>💾</span> {{ button_text }}
+                    </button>
+                    <a href="{% url 'contact_list' %}" class="btn btn-outline btn-full">
+                        <span>↩️</span> Отмена
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Предпросмотр аватара
+    document.addEventListener('DOMContentLoaded', function() {
+        const avatarInput = document.querySelector('input[type="file"]');
+        const previewImage = document.getElementById('previewImage');
+        const previewPlaceholder = document.querySelector('.preview-placeholder');
+        
+        if (avatarInput) {
+            avatarInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                        if (previewPlaceholder) {
+                            previewPlaceholder.style.display = 'none';
+                        }
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
